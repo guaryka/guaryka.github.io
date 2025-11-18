@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>PHP Cookie Magic!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap');
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: radial-gradient(circle at top,#fee9c7 0,#f9d5c0 40%,#f1c5b1 100%);
+            font-family: 'Fredoka', 'Comic Sans MS', sans-serif;
+            color: #4a2d22;
+        }
+        .pad {
+            width: 600px;
+            margin: 40px auto;
+            background: #fff7e6;
+            border-radius: 18px;
+            padding: 32px 34px 40px;
+            box-shadow: 0 20px 40px rgba(59,32,11,.25), inset 0 0 0 2px #f3dcb8;
+            position: relative;
+        }
+        .pad:before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: -24px;
+            width: 160px;
+            height: 30px;
+            margin-left: -80px;
+            background: rgba(0,0,0,.12);
+            border-radius: 12px;
+        }
+        h1 {
+            margin: 0 0 8px;
+            text-align: center;
+            color: #b85c00;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 26px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0;
+            font-size: 15px;
+        }
+        th {
+            background: #ffd272;
+            color: #5c3313;
+            padding: 8px;
+            border-radius: 12px 12px 0 0;
+        }
+        td {
+            padding: 8px 6px;
+        }
+        tr:nth-child(odd) td {
+            background: #fff1d3;
+        }
+        tr:nth-child(even) td {
+            background: #ffe5ba;
+        }
+        code {
+            background: #5c3313;
+            color: #feeec3;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .box {
+            border: 2px dashed #f1a55a;
+            border-radius: 16px;
+            padding: 16px;
+            margin-top: 20px;
+            background: #fff9eb;
+        }
+        .example {
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 14px;
+            background: linear-gradient(135deg,#ffe2a7,#ffc9b9);
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,.05);
+            line-height: 1.4;
+        }
+        .cookie {
+            position: absolute;
+            right: -40px;
+            bottom: 20px;
+            width: 110px;
+            height: 110px;
+            background: radial-gradient(circle,#f0a55c,#cf7d3c);
+            border-radius: 50%;
+            box-shadow: inset -12px -12px 0 #ad642a;
+        }
+        .cookie:before,
+        .cookie:after {
+            content: "";
+            position: absolute;
+            background: #5a2b0e;
+            border-radius: 50%;
+        }
+        .cookie:before {
+            width: 18px;
+            height: 18px;
+            top: 24px;
+            left: 36px;
+        }
+        .cookie:after {
+            width: 12px;
+            height: 12px;
+            top: 58px;
+            left: 64px;
+        }
+        ul {
+            padding-left: 18px;
+            line-height: 1.5;
+        }
+        .notice {
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 14px;
+            background: #fde4a2;
+            border: 2px solid #f0b45d;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.4);
+            font-size: 15px;
+            color: #5c3313;
+        }
+    </style>
+</head>
+<body>
+<div class="pad">
+    <h1>Phép Thuật Cookie</h1>
+    <table>
+        <tr>
+            <th>Hành động</th>
+            <th>Lệnh PHP</th>
+            <th>Cách hiểu</th>
+        </tr>
+        <tr>
+            <td>Tạo / Cập nhật</td>
+            <td><code>setcookie("cart","Zoe",time()+86400,"/")</code></td>
+            <td>Tạo mới hoặc đổi giá trị. Dùng <code>time()+số giây</code> để đặt hạn.</td>
+        </tr>
+        <tr>
+            <td>Lấy dữ liệu</td>
+            <td><code>$_COOKIE["cart"]</code></td>
+            <td>Đọc kho báu nhỏ! 🍪</td>
+        </tr>
+        <tr>
+            <td>Xóa</td>
+            <td><code>setcookie("cart","",time()-3600,"/")</code></td>
+            <td>Đẩy hạn về quá khứ ⇒ cookie biến mất!</td>
+        </tr>
+    </table>
+
+    <div class="box">
+        <strong>Nguyên liệu bí mật ✨</strong>
+        <ul>
+            <li><code>name</code>: tên biến</li>
+            <li><code>value</code>: giá trị</li>
+            <li><code>expire</code>: <code>time()</code> + số giây</li>
+            <li><code>path</code>: phạm vi được dùng (<code>/home</code> hay <code>/</code>)</li>
+        </ul>
+    </div>
+
+    <div class="example">
+        <strong>Câu thần chú ví dụ:</strong><br>
+        “Xin chào, mình là <code>cart</code> chứa Zoe! Mình sống 1 ngày (86400s) và đi được khắp nơi (<code>/</code>)!”<br>
+        Muốn đổi giá trị? Gọi lại <code>setcookie("cart","Alex",time()+86400,"/")</code>.<br>
+        Muốn quên (xóa) mình? Đẩy mình về quá khứ moehehe: <code>setcookie("cart","",time()-86400,"/")</code>.
+    </div>
+
+    <div class="notice">
+        <strong>Chú ý về <code>path</code>:</strong> Nếu đặt <code>path="/home"</code> thì cookie chỉ dùng được ở những trang bắt đầu bằng <code>/home</code>
+        (ví dụ <code>/home</code>, <code>/home/login</code>). Đặt <code>path="/"</code> để cookie đi được khắp mọi nơi trong website nha!
+    </div>
+
+    <div class="cookie"></div>
+</div>
+</body>
+</html>
